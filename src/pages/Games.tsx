@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 const Games = () => {
   const games = [
     {
+      id: "1",
       title: "Horizon Forbidden West",
       developer: "Guerrilla Games",
       image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
@@ -17,6 +18,7 @@ const Games = () => {
       tags: ["Visual", "Auditory", "Motor"]
     },
     {
+      id: "2",
       title: "The Last of Us Part II",
       developer: "Naughty Dog",
       image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
@@ -24,6 +26,7 @@ const Games = () => {
       tags: ["Visual", "Auditory", "Motor", "Cognitive"]
     },
     {
+      id: "3",
       title: "Forza Horizon 5",
       developer: "Playground Games",
       image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
@@ -31,6 +34,7 @@ const Games = () => {
       tags: ["Motor", "Visual", "Cognitive"]
     },
     {
+      id: "4",
       title: "Hades",
       developer: "Supergiant Games",
       image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
@@ -38,6 +42,7 @@ const Games = () => {
       tags: ["Visual", "Motor"]
     },
     {
+      id: "5",
       title: "Celeste",
       developer: "Extremely OK Games",
       image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
@@ -45,6 +50,7 @@ const Games = () => {
       tags: ["Motor", "Cognitive", "Auditory"]
     },
     {
+      id: "6",
       title: "Minecraft",
       developer: "Mojang Studios",
       image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
@@ -108,38 +114,40 @@ const Games = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {games.map((game, index) => (
-                <Card key={index} className="overflow-hidden card-interactive">
-                  <div className="aspect-video relative">
-                    <img 
-                      src={game.image} 
-                      alt={game.title}
-                      className="object-cover w-full h-full" 
-                    />
-                    <div className="absolute top-2 right-2">
-                      <div className={`${getScoreColor(game.accessibilityScore)} text-white text-xs font-bold px-2 py-1 rounded-md`}>
-                        {game.accessibilityScore}%
+                <Link to={`/game/${game.id}`} key={index}>
+                  <Card className="overflow-hidden card-interactive hover:shadow-lg transition-all duration-200 h-full">
+                    <div className="aspect-video relative">
+                      <img 
+                        src={game.image} 
+                        alt={game.title}
+                        className="object-cover w-full h-full" 
+                      />
+                      <div className="absolute top-2 right-2">
+                        <div className={`${getScoreColor(game.accessibilityScore)} text-white text-xs font-bold px-2 py-1 rounded-md`}>
+                          {game.accessibilityScore}%
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <CardHeader className="pb-2">
-                    <CardTitle>{game.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground">{game.developer}</p>
-                  </CardHeader>
-                  <CardContent className="pb-2">
-                    <div className="flex flex-wrap gap-1">
-                      {game.tags.map((tag, i) => (
-                        <Badge key={i} className={`badge-accessibility ${getTagColor(tag)}`}>
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="ghost" size="sm" className="w-full">
-                      View Evaluation
-                    </Button>
-                  </CardFooter>
-                </Card>
+                    <CardHeader className="pb-2">
+                      <CardTitle>{game.title}</CardTitle>
+                      <p className="text-sm text-muted-foreground">{game.developer}</p>
+                    </CardHeader>
+                    <CardContent className="pb-2">
+                      <div className="flex flex-wrap gap-1">
+                        {game.tags.map((tag, i) => (
+                          <Badge key={i} className={`badge-accessibility ${getTagColor(tag)}`}>
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button variant="ghost" size="sm" className="w-full">
+                        Play Game
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </Link>
               ))}
             </div>
           </div>
