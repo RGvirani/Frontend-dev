@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="border-t bg-muted/30">
       <div className="container px-4 md:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
               <Gamepad2 className="h-6 w-6 text-game-blue-600" />
@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-semibold text-sm mb-3">Platform</h3>
+            <h3 className="font-semibold text-sm mb-3">Navigation</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/" className="text-muted-foreground hover:text-foreground">
@@ -49,66 +49,24 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/checklists" className="text-muted-foreground hover:text-foreground">
-                  Accessibility Checklists
-                </Link>
-              </li>
-              <li>
-                <Link to="/evaluate" className="text-muted-foreground hover:text-foreground">
-                  Evaluation Tools
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold text-sm mb-3">Resources</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/guidelines" className="text-muted-foreground hover:text-foreground">
-                  Accessibility Guidelines
-                </Link>
-              </li>
-              <li>
-                <Link to="/blog" className="text-muted-foreground hover:text-foreground">
-                  Blog & Articles
-                </Link>
-              </li>
-              <li>
-                <Link to="/research" className="text-muted-foreground hover:text-foreground">
-                  Research Methods
-                </Link>
-              </li>
-              <li>
-                <Link to="/case-studies" className="text-muted-foreground hover:text-foreground">
-                  Case Studies
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold text-sm mb-3">Company</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
                 <Link to="/about" className="text-muted-foreground hover:text-foreground">
                   About Us
                 </Link>
               </li>
-              <li>
-                <Link to="/contact" className="text-muted-foreground hover:text-foreground">
-                  Contact
-                </Link>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="font-semibold text-sm mb-3">Contact</h3>
+            <ul className="space-y-2 text-sm">
+              <li className="text-muted-foreground">
+                Email: contact@gameae.com
               </li>
-              <li>
-                <Link to="/careers" className="text-muted-foreground hover:text-foreground">
-                  Careers
-                </Link>
+              <li className="text-muted-foreground">
+                Phone: +1 (123) 456-7890
               </li>
-              <li>
-                <Link to="/privacy" className="text-muted-foreground hover:text-foreground">
-                  Privacy Policy
-                </Link>
+              <li className="text-muted-foreground">
+                Address: 123 Game Street, San Francisco, CA
               </li>
             </ul>
           </div>
@@ -118,14 +76,11 @@ const Footer = () => {
             © {new Date().getFullYear()} Game AE. All rights reserved.
           </p>
           <div className="flex gap-8">
-            <Link to="/terms" className="text-xs text-muted-foreground hover:text-foreground">
-              Terms
+            <Link to="/about" className="text-xs text-muted-foreground hover:text-foreground">
+              Privacy Policy
             </Link>
-            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-foreground">
-              Privacy
-            </Link>
-            <Link to="/cookies" className="text-xs text-muted-foreground hover:text-foreground">
-              Cookies
+            <Link to="/about" className="text-xs text-muted-foreground hover:text-foreground">
+              Terms of Service
             </Link>
           </div>
         </div>

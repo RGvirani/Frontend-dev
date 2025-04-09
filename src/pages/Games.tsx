@@ -1,4 +1,6 @@
+
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -6,14 +8,26 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Badge } from "@/components/ui/badge";
 import { Search, Filter, SortAsc } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuCheckboxItem, 
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel
+} from "@/components/ui/dropdown-menu";
 
 const Games = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sortType, setSortType] = useState<"name" | "score">("score");
+  
   const games = [
     {
       id: "1",
       title: "Horizon Forbidden West",
       developer: "Guerrilla Games",
-      image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&h=400",
       accessibilityScore: 85,
       tags: ["Visual", "Auditory", "Motor"]
     },
@@ -21,7 +35,7 @@ const Games = () => {
       id: "2",
       title: "The Last of Us Part II",
       developer: "Naughty Dog",
-      image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&h=400",
       accessibilityScore: 95,
       tags: ["Visual", "Auditory", "Motor", "Cognitive"]
     },
@@ -29,7 +43,7 @@ const Games = () => {
       id: "3",
       title: "Forza Horizon 5",
       developer: "Playground Games",
-      image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=600&h=400",
       accessibilityScore: 90,
       tags: ["Motor", "Visual", "Cognitive"]
     },
@@ -37,7 +51,7 @@ const Games = () => {
       id: "4",
       title: "Hades",
       developer: "Supergiant Games",
-      image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=600&h=400",
       accessibilityScore: 75,
       tags: ["Visual", "Motor"]
     },
@@ -45,7 +59,7 @@ const Games = () => {
       id: "5",
       title: "Celeste",
       developer: "Extremely OK Games",
-      image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
+      image: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c?auto=format&fit=crop&w=600&h=400",
       accessibilityScore: 80,
       tags: ["Motor", "Cognitive", "Auditory"]
     },
@@ -53,11 +67,30 @@ const Games = () => {
       id: "6",
       title: "Minecraft",
       developer: "Mojang Studios",
-      image: "https://placehold.co/600x400/3678f6/FFFFFF/png?text=Game+Cover",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&h=400",
       accessibilityScore: 70,
       tags: ["Visual", "Cognitive"]
     }
   ];
+
+  const allTags = [...new Set(games.flatMap(game => game.tags))];
+
+  const filteredGames = games
+    .filter(game => 
+      game.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      game.developer.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .filter(game => 
+      selectedTags.length === 0 || 
+      selectedTags.some(tag => game.tags.includes(tag))
+    )
+    .sort((a, b) => {
+      if (sortType === "score") {
+        return b.accessibilityScore - a.accessibilityScore;
+      } else {
+        return a.title.localeCompare(b.title);
+      }
+    });
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return "bg-green-500";
@@ -73,6 +106,14 @@ const Games = () => {
       case "Cognitive": return "bg-amber-100 text-amber-800";
       default: return "bg-gray-100 text-gray-800";
     }
+  };
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
   };
 
   return (
@@ -100,20 +141,60 @@ const Games = () => {
                   className="pl-9"
                   placeholder="Search games..."
                   type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button variant="outline" size="icon">
-                <Filter className="h-4 w-4" />
-                <span className="sr-only">Filter</span>
-              </Button>
-              <Button variant="outline" size="icon">
-                <SortAsc className="h-4 w-4" />
-                <span className="sr-only">Sort</span>
-              </Button>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Filter className="h-4 w-4" />
+                    <span className="sr-only">Filter</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Filter by accessibility</DropdownMenuLabel>
+                  {allTags.map((tag) => (
+                    <DropdownMenuCheckboxItem
+                      key={tag}
+                      checked={selectedTags.includes(tag)}
+                      onCheckedChange={() => toggleTag(tag)}
+                    >
+                      {tag}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <SortAsc className="h-4 w-4" />
+                    <span className="sr-only">Sort</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuCheckboxItem
+                    checked={sortType === "score"}
+                    onCheckedChange={() => setSortType("score")}
+                  >
+                    Accessibility Score
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={sortType === "name"}
+                    onCheckedChange={() => setSortType("name")}
+                  >
+                    Name
+                  </DropdownMenuCheckboxItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {games.map((game, index) => (
+              {filteredGames.map((game, index) => (
                 <Link to={`/game/${game.id}`} key={index}>
                   <Card className="overflow-hidden card-interactive hover:shadow-lg transition-all duration-200 h-full">
                     <div className="aspect-video relative">
@@ -150,6 +231,13 @@ const Games = () => {
                 </Link>
               ))}
             </div>
+            
+            {filteredGames.length === 0 && (
+              <div className="text-center py-12">
+                <h3 className="text-xl font-medium">No games found</h3>
+                <p className="text-muted-foreground mt-2">Try adjusting your search or filters</p>
+              </div>
+            )}
           </div>
         </section>
       </main>
