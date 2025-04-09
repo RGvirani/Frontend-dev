@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Gamepad2, Mail, GitHub, Twitter, Linkedin } from "lucide-react";
+import { Gamepad2, Mail, Github, Twitter, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -21,7 +21,7 @@ const Footer = () => {
                 <span className="sr-only">Twitter</span>
               </a>
               <a href="#" className="text-muted-foreground hover:text-foreground">
-                <GitHub className="h-5 w-5" />
+                <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </a>
               <a href="#" className="text-muted-foreground hover:text-foreground">

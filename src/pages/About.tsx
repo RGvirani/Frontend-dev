@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Gamepad2, Users, LineChart, Tool, Mail, ArrowRight } from "lucide-react";
+import { Gamepad2, Users, LineChart, Wrench, Mail, ArrowRight } from "lucide-react";
 
 const About = () => {
   return (
@@ -77,7 +77,7 @@ const About = () => {
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="bg-game-blue-100 rounded-full p-1 mt-1">
-                      <Tool className="h-5 w-5 text-game-blue-600" />
+                      <Wrench className="h-5 w-5 text-game-blue-600" />
                     </div>
                     <div>
                       <strong className="font-medium">Better Design</strong>
